@@ -5,11 +5,11 @@ const User = require('../mongodb/models/user');
 router.post('/', async function (req, res) {
   const { username, password } = req.body;
   //check if already register
-  const result = await User.find({ username });
-  if (result[0]) {
+  const result = await User.findOne({ username });
+  if (result) {
     res.send('already registered');
   } else {
-    //incript password
+    //TODO incript password
 
     //save to db
     User.insertMany([{ username, password }]);
