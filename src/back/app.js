@@ -6,8 +6,9 @@ const cors = require('cors');
 const api = require('./routers/api');
 const redirect = require('./routers/redirect');
 const register = require('./routers/register');
-const errorHandler = require('./errorHandler');
 const log = require('./routers/log');
+const errorHandler = require('./middleware/errorHandler');
+const tokenCheck = require('./middleware/token');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -31,8 +32,8 @@ app.get('/', function (req, res) {
 });
 
 app.use('/register', register);
-app.use('/api/', api);
 app.use('/log', log);
+app.use('/api/', tokenCheck, api);
 app.use('/s/', redirect);
 app.use(errorHandler);
 
